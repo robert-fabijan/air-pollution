@@ -1,0 +1,9 @@
+steps:
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - functions
+  - deploy
+  - air-pollution-function
+  - --source=.
+  - --runtime=python310
+  - --trigger-http
