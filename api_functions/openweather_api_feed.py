@@ -3,7 +3,7 @@ from data_extraction import OpenWeatherDataExtractor
 # from cloud_functions import cloud_integration
 import sys
 import yaml
-
+import functions_framework
 
 class OpenWeatherDataIngestor:
 
@@ -104,7 +104,7 @@ class OpenWeatherDataIngestor:
 
         return air_pollution_history_data
     
-
+@functions_framework.http
 def gcloud_get_openweather_data_function(request, context=None) -> dict:
     '''
 
