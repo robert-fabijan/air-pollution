@@ -1,3 +1,4 @@
+logsBucket: "gs://builds-logs-bucket"
 steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   args:
@@ -10,4 +11,4 @@ steps:
   - --allow-unauthenticated  # Optional, based on whether you want to allow public access
 
 
-logsBucket: "gs://builds-logs-bucket"
+
