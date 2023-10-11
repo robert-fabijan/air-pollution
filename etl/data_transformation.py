@@ -96,6 +96,6 @@ class OpenWeatherHistoricalDataTransformator:
         return all_city_history_data_frame
 
 
-x = OpenWeatherHistoricalDataTransformator()
-file = x.load_json("C:\\Users\\matacza\\Desktop\\Projekty\\DE\\Pobieranie Danych (API)\\code\\data\\all_city_data.json")
-print(x.save_history_data_to_dict(file))
+# x = OpenWeatherHistoricalDataTransformator()
+# file = x.load_json("C:\\Users\\matacza\\Desktop\\Projekty\\DE\\Pobieranie Danych (API)\\code\\data\\all_city_data.json")
+# print(x.save_history_data_to_dict(file))
