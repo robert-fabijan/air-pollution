@@ -3,7 +3,7 @@ steps:
   args:
   - functions
   - deploy
-  - air-pollution-function
+  - function-air-pollution
   - --source=.
   - --runtime=python310
   - --trigger-http
