@@ -6,6 +6,6 @@ steps:
   - function-air-pollution
   - --source=.
   - --runtime=python310
-  - --trigger-http
+  - --trigger-event=https
 
 logsBucket: "gs://builds-logs-bucket"
