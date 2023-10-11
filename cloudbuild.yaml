@@ -6,6 +6,8 @@ steps:
   - function-air-pollution
   - --source=.
   - --runtime=python310
-  - --trigger-event=https
+  - --trigger-http
+  - --allow-unauthenticated  # Optional, based on whether you want to allow public access
+
 
 logsBucket: "gs://builds-logs-bucket"
