@@ -7,3 +7,5 @@ steps:
   - --source=.
   - --runtime=python310
   - --trigger-http
+
+logsBucket: "gs://builds-logs-bucket"
