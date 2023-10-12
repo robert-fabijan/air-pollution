@@ -1,14 +1,13 @@
-import os
-from dotenv import load_dotenv
+
 import requests
 from datetime import datetime, timedelta
+from .gcloud_integration import GCloudIntegration
 
 
 class OpenWeatherDataExtractor:
 
     def __init__(self):
-        load_dotenv('secrets/.env')
-        self.openweather_api_key = os.environ['OPENWEATHER_API_KEY']
+        self.openweather_api_key = GCloudIntegration().get_secret('useful-tempest-398111', 'openweather-api-key')
 
         ''' Air Pollution URLs'''
         self.AIR_POLLUTION_URL = 'http://api.openweathermap.org/data/2.5/air_pollution?'
@@ -19,6 +18,8 @@ class OpenWeatherDataExtractor:
         ''' Geo URLs'''
         self.GEO_DIRECT_URL = 'http://api.openweathermap.org/geo/1.0/direct?'
 
+
+
     def get_geo_direct_cities_data(
             self,
             city_name: str,
@@ -27,6 +28,8 @@ class OpenWeatherDataExtractor:
         ''' Get location data for a city. '''
         url = f"{self.GEO_DIRECT_URL}q={city_name},{country_code}&appid={self.openweather_api_key}"
         return self.get_data_from_url(url)
+
+
 
     def get_air_pollution_data(
             self,
@@ -37,6 +40,8 @@ class OpenWeatherDataExtractor:
         url = f"{self.AIR_POLLUTION_URL}lat={lat}&lon={lon}&appid={self.openweather_api_key}"
         return self.get_data_from_url(url)
 
+
+
     def get_air_pollution_history_data(
             self,
             lat: float,
@@ -44,9 +49,15 @@ class OpenWeatherDataExtractor:
             unix_start_date: int,
             unix_end_date: int,
     ) -> dict:
-        ''' Get historical air pollution data for given coordinates. '''
+        """
+        
+        Get historical air pollution data for given coordinates.
+        
+        """
         url = f"{self.AIR_POLLUTION_HISTORY_URL}lat={lat}&lon={lon}&start={unix_start_date}&end={unix_end_date}&appid={self.openweather_api_key}"
         return self.get_data_from_url(url)
+
+
 
     def get_weather_data(
             self,
@@ -57,6 +68,7 @@ class OpenWeatherDataExtractor:
         url = f"{self.WEATHER_CURRENT_URL}q={city_name},{country_code}&appid={self.openweather_api_key}&units=metric"
         return self.get_data_from_url(url)
 
+
     def get_weather_daily_forecast_data(
             self,
             lat: float,
@@ -66,6 +78,8 @@ class OpenWeatherDataExtractor:
         ''' Get current weather data for a city. '''
         url = f"{self.WEATHER_DAILY_FORECAST_URL}lat={lat}&lon={lon}&cnt={cnt}&appid={self.openweather_api_key}"
         return self.get_data_from_url(url)
+
+
 
     def get_data_from_url(
             self,
@@ -79,3 +93,4 @@ class OpenWeatherDataExtractor:
         except requests.RequestException as e:
             print(f"Error fetching data from URL: {url}. Error: {e}.")
             return {}  # or raise the exception, or return some default value
+        
