@@ -1,7 +1,7 @@
 
 import requests
 from datetime import datetime, timedelta
-from gcloud.gcloud_functions.shared.models.gcloud_integration import GCloudIntegration
+from gcloud_functions.shared.models.gcloud_integration import GCloudIntegration
 
 
 class OpenWeatherDataExtractor:
