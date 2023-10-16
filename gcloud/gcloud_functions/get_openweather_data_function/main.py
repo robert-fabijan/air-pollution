@@ -2,14 +2,15 @@ import functions_framework
 import sys
 import os
 
-# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # add gcloud_functions
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # add gcloud_functions
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))) # add gcloud
+print()
 print()
 print(sys.path)
 print()
 
-from gcloud_functions.shared.models.openweather_transformator import OpenWeatherDataIngestor
-from gcloud_functions.shared.utils import DataConfigurator
+from ..shared.models.openweather_transformator import OpenWeatherDataIngestor
+from ..shared.utils import DataConfigurator
 
 
 
