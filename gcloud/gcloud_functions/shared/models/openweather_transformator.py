@@ -1,4 +1,4 @@
-from ...shared.models.openweather_extrator import OpenWeatherDataExtractor
+from openweather_extrator import OpenWeatherDataExtractor
 
 
 class OpenWeatherDataIngestor:
