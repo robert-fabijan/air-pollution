@@ -7,7 +7,8 @@ from shared.models.gcloud_integration import GCloudIntegration
 class OpenWeatherDataExtractor:
 
     def __init__(self):
-        self.openweather_api_key = GCloudIntegration().get_secret('useful-tempest-398111', 'openweather-api-key')
+        # self.openweather_api_key = GCloudIntegration().get_secret('useful-tempest-398111', 'openweather-api-key')
+        self.openweather_api_key = "59cd630330d16f5bb690c87653919469"
 
         ''' Air Pollution URLs'''
         self.AIR_POLLUTION_URL = 'http://api.openweathermap.org/data/2.5/air_pollution?'
