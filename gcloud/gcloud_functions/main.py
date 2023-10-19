@@ -45,5 +45,6 @@ def gcloud_get_openweather_data_function(request, context=None) -> dict:
         all_city_data[city['name']]['air_pollution'] = air_pollution_data
         all_city_data[city['name']]['history_air_pollution'] = historical_air_pollution
 
-    return str(all_city_data)
+    return all_city_data
 
+gcloud_get_openweather_data_function('x', 'x')

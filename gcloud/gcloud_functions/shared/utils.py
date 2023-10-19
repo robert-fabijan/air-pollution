@@ -1,10 +1,12 @@
 import yaml
+import os
 
 class DataConfigurator:
 
 
     def __init__(self) -> None:
-        self.cities_yaml = 'gcloud\\gcloud_functions\\shared\\configs\\cities.yaml'
+        self.cities_yaml = os.path.join(os.path.dirname(__file__) , 'configs/cities.yaml') 
+        
 
 
     def load_cities_from_yaml(self):
