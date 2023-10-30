@@ -8,6 +8,8 @@ steps:
       - '--runtime'
       - 'python311'
       - '--trigger-http'
+      - '--trigger-event'
+      - ''
       - '--allow-unauthenticated'
       - '--source'
       - './gcloud/gcloud_functions'
