@@ -1,6 +1,6 @@
 logsBucket: "gs://builds-logs-bucket"
 steps:
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - name: 'deploy-cloud-functions'
     args:
       - 'functions'
       - 'deploy'
@@ -13,13 +13,10 @@ steps:
       - './gcloud/gcloud_functions'
 
 
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - name: 'deploy-workflows'
     args:
       - 'workflows'
       - 'deploy'
-      - 'YOUR_WORKFLOW_NAME'
+      - 'workflow-air-pollution'
       - '--source'
       - './workflow.yaml'
-
-
-
