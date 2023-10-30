@@ -2,6 +2,16 @@ logsBucket: "gs://builds-logs-bucket"
 steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     args:
+    - gcloud
+    - functions
+    - deploy
+    - function-air-pollution
+    - --region=us-central1
+    - --source=./gcloud/gcloud_functions
+    - --trigger-http
+    - --runtime=python311
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
       - 'functions'
       - 'deploy'
       - 'function-air-pollution'
