@@ -1,6 +1,6 @@
 logsBucket: "gs://builds-logs-bucket"
 steps:
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     args:
       - 'functions'
       - 'deploy'
@@ -8,8 +8,6 @@ steps:
       - '--runtime'
       - 'python311'
       - '--trigger-http'
-      - '--trigger-event'
-      - ''
       - '--allow-unauthenticated'
       - '--source'
       - './gcloud/gcloud_functions'
