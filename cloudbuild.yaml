@@ -22,6 +22,6 @@ steps:
   # run
   - name: python
     entrypoint: python
-    args: ["gcloud/gcloud_data_pipeline/DAGS/upload_dags_to_composer.py", "--dags_directory=dags//", "--dags_bucket=gs://air-pollution-bucket//dags"]
+    args: ["gcloud/gcloud_data_pipeline/dags/upload_dags_to_composer.py", "--dags_directory=dags//", "--dags_bucket=gs://air-pollution-bucket//dags"]
 
   # [END composer_cicd_dagsync_yaml]
