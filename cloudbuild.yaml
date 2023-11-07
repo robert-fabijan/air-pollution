@@ -14,18 +14,31 @@ steps:
 
   # [START composer_cicd_dagsync_yaml]
 
-  # install dependencies
-  - name: python
+  # Step to upgrade pip
+  - name: 'python'
     entrypoint: pip
-    args: ["install", "--upgrade", "pip"]
+    args: ['install', '--upgrade', 'pip']
 
-  - name: python
+  # Step to download the Rust installation script
+  - name: 'gcr.io/cloud-builders/curl'
+    args: ['--proto', '=https', '--tlsv1.2', '-sSf', '-o', '/tmp/rustup.sh', 'https://sh.rustup.rs']
+
+  # Step to execute the Rust installation script
+  - name: 'ubuntu'
+    entrypoint: 'bash'
+    args: ['/tmp/rustup.sh', '-y']
+
+  # Step to install Airflow and other Python dependencies
+  - name: 'python'
     entrypoint: pip
-    args: ["install", "-r", "requirements.txt", "--user"]
+    args: ['install', '-r', 'requirements.txt', '--user']
 
-  # run
-  - name: python
-    entrypoint: python
-    args: ["gcloud/gcloud_data_pipeline/dags/upload_dags_to_composer.py", "--dags_directory=dags//", "--dags_bucket=gs://air-pollution-bucket//dags"]
+  # run your Python script
+  - name: 'python'
+    entrypoint: 'python'
+    args: ['gcloud/gcloud_data_pipeline/dags/upload_dags_to_composer.py', '--dags_directory=dags/', '--dags_bucket=gs://air-pollution-bucket/dags']
 
-  # [END composer_cicd_dagsync_yaml]
+# Make sure the Cargo bin directory is in the PATH for subsequent steps
+options:
+  env:
+  - 'PATH=/root/.cargo/bin:$PATH'
