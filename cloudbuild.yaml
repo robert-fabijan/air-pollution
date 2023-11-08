@@ -18,6 +18,8 @@ steps:
   - name: 'python'
     entrypoint: pip
     args: ['install', '--upgrade', 'pip']
+    env:
+    - 'PATH=/root/.cargo/bin:$PATH'
 
   # Step to download the Rust installation script
   - name: 'gcr.io/cloud-builders/curl'
@@ -27,18 +29,19 @@ steps:
   - name: 'ubuntu'
     entrypoint: 'bash'
     args: ['/tmp/rustup.sh', '-y']
+    env:
+    - 'PATH=/root/.cargo/bin:$PATH'
 
   # Step to install Airflow and other Python dependencies
   - name: 'python'
     entrypoint: pip
     args: ['install', '-r', 'requirements.txt', '--user']
+    env:
+    - 'PATH=/root/.cargo/bin:$PATH'
 
-  # run your Python script
+  # run  Python script
   - name: 'python'
     entrypoint: 'python'
     args: ['gcloud/gcloud_data_pipeline/dags/upload_dags_to_composer.py', '--dags_directory=dags/', '--dags_bucket=gs://air-pollution-bucket/dags']
-
-# Make sure the Cargo bin directory is in the PATH for subsequent steps
-options:
-  env:
-  - 'PATH=/root/.cargo/bin:$PATH'
+    env:
+    - 'PATH=/root/.cargo/bin:$PATH'
