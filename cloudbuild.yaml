@@ -18,8 +18,6 @@ steps:
   - name: 'python'
     entrypoint: pip
     args: ['install', '--upgrade', 'pip']
-    env:
-    - 'PATH=/root/.cargo/bin:$PATH'
 
   # Step to download the Rust installation script
   - name: 'gcr.io/cloud-builders/curl'
@@ -39,7 +37,7 @@ steps:
     env:
     - 'PATH=/root/.cargo/bin:$PATH'
 
-  # run  Python script
+  # Run your Python script
   - name: 'python'
     entrypoint: 'python'
     args: ['gcloud/gcloud_data_pipeline/dags/upload_dags_to_composer.py', '--dags_directory=dags/', '--dags_bucket=gs://air-pollution-bucket/dags']
