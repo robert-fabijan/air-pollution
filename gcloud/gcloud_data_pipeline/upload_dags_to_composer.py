@@ -10,7 +10,31 @@ import tempfile
 from google.cloud import storage
 
 
+
+def _get_storage_client():
+    """
+    Method that loads credential provided through secrets on Google Cloud. 
+
+    `cloudbuild.yaml` retrieves json file from secrets and saves it as environmental variable 
+    for image to use it 
+
+    Returns:
+        google storage client
+    """
+    credentials_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
+    if credentials_json:
+        credentials_dict = json.loads(credentials_json)
+        credentials = service_account.Credentials.from_service_account_info(credentials_dict)
+        return storage.Client(credentials=credentials)
+    else:
+        return storage.Client()
+
+
+
 def _create_dags_list(dags_directory: str) -> tuple[str, list[str]]:
+    """
+    Create a temporary list for dags files to being uploaded to storage bucket
+    """
     temp_dir = tempfile.mkdtemp()
 
     # ignore non-DAG Python files
@@ -23,6 +47,7 @@ def _create_dags_list(dags_directory: str) -> tuple[str, list[str]]:
     # so we can exclude all non Python files
     dags = glob.glob(f"{temp_dir}/*.py")
     return (temp_dir, dags)
+
 
 
 def upload_dags_to_composer(
@@ -44,7 +69,7 @@ def upload_dags_to_composer(
         # if you have a large number of files, consider using
         # the Python subprocess module to run gsutil -m cp -r on your dags
         # See https://cloud.google.com/storage/docs/gsutil/commands/cp for more info
-        storage_client = storage.Client()
+        storage_client = _get_storage_client()
         bucket = storage_client.bucket(bucket_name)
 
         for dag in dags:
