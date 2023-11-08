@@ -74,20 +74,21 @@ def upload_dags_to_composer(
         storage_client = _get_storage_client()
         bucket = storage_client.bucket(bucket_name)
 
-        for dag in dags:
-            # Remove path to temp dir
-            dag = dag.replace(f"{temp_dir}/", name_replacement)
+        for dag_path in dags:
+            # Extract the filename from the path
+            dag_filename = os.path.basename(dag_path)
+            # The path to use for blob should be the relative path within the bucket
+            blob_path = os.path.join(name_replacement, dag_filename)
+            # The actual file to upload is in the temp directory
+            local_dag_path = os.path.join(temp_dir, dag_filename)
 
             try:
                 # Upload to your bucket
-                blob = bucket.blob(dag)
-                blob.upload_from_filename(dag)
-                print(f"File {dag} uploaded to {bucket_name}/{dag}.")
-            except FileNotFoundError:
-                current_directory = os.listdir()
-                print(
-                    f"{name_replacement} directory not found in {current_directory}, you may need to override the default value of name_replacement to point to a relative directory"
-                )
+                blob = bucket.blob(blob_path)
+                blob.upload_from_filename(local_dag_path)
+                print(f"File {local_dag_path} uploaded to {bucket_name}/{blob_path}.")
+            except FileNotFoundError as e:
+                print(f"Failed to upload {local_dag_path}: {e}")
                 raise
 
     else:
