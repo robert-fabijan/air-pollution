@@ -33,13 +33,13 @@ steps:
   # run the dag tests
   - name: 'gcr.io/cloud-builders/docker'
     args: ['run', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}']
-    id: 'install-airflow'
+    id: 'docker run'
     
 
-  # Run your Python script to move dags to folder
-  - name: 'python'
-    entrypoint: 'python'
-    args: ['gcloud/gcloud_data_pipeline/upload_dags_to_composer.py', '--dags_directory=dags/', '--dags_bucket=gs://air-pollution-bucket/dags']
+  # # Run your Python script to move dags to folder
+  # - name: 'python'
+  #   entrypoint: 'python'
+  #   args: ['gcloud/gcloud_data_pipeline/upload_dags_to_composer.py', '--dags_directory=dags/', '--dags_bucket=gs://air-pollution-bucket/dags']
 
   # Other method of running dags to your folder
   - name: 'gcr.io/cloud-builders/gsutil'
