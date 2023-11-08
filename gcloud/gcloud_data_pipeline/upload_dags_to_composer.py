@@ -23,7 +23,7 @@ def _get_storage_client():
     Returns:
         google storage client
     """
-    credentials_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
+    credentials_json = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS_JSON", "Not Found")
     if credentials_json:
         credentials_dict = json.loads(credentials_json)
         credentials = service_account.Credentials.from_service_account_info(credentials_dict)
@@ -95,6 +95,8 @@ def upload_dags_to_composer(
 
 
 if __name__ == "__main__":
+
+    
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
