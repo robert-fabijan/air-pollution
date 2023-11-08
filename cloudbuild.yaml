@@ -14,11 +14,6 @@ steps:
 
   # [START composer_cicd_dagsync_yaml]
 
-  # Step to upgrade pip
-  - name: 'python'
-    entrypoint: pip
-    args: ['install', '--upgrade', 'pip']
-
   # Step to download the Rust installation script
   - name: 'gcr.io/cloud-builders/curl'
     args: ['--proto', '=https', '--tlsv1.2', '-sSf', '-o', '/tmp/rustup.sh', 'https://sh.rustup.rs']
