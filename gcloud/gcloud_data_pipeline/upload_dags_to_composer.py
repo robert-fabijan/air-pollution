@@ -58,7 +58,7 @@ def upload_dags_to_composer(
     """
     Given a directory, this function moves all DAG files from that directory
     to a temporary directory, then uploads all contents of the temporary directory
-    to a given cloud storage bucket.
+    to a given cloud storage bucket..
     Args:
         dags_directory (str): a fully qualified path to a directory that contains a "dags/" subdirectory
         bucket_name (str): the GCS bucket of the Cloud Composer environment to upload DAGs to
