@@ -23,6 +23,11 @@ def _get_storage_client():
     Returns:
         google storage client
     """
+    from pprint import pprint
+    pprint(os.getenv().items())
+    print()
+    print()
+    pprint(os.getenv('GOOGLE_APPLICATION_CREDENTIALS_JSON'))
     credentials_json = os.getenv('GOOGLE_APPLICATION_CREDENTIALS_JSON')
     if credentials_json:
         credentials_dict = json.loads(credentials_json)
