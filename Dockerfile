@@ -12,4 +12,4 @@ ENV WORK_DIRECTORY ./gcloud/gcloud_data_pipeline/
 WORKDIR $WORK_DIRECTORY
 COPY . ./
 
-CMD python $WORK_DIRECTORY/upload_dags_to_composer.py --dags_directory=$WORK_DIRECTORY/dags/ --dags_bucket=air-pollution-bucket/dags
+CMD python $WORK_DIRECTORY/upload_dags_to_composer.py --dags_directory=$WORK_DIRECTORY/dags/ --dags_bucket=air-pollution-bucket
