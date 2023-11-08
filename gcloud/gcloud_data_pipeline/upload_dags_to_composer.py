@@ -23,11 +23,6 @@ def _get_storage_client():
     Returns:
         google storage client
     """
-    # from pprint import pprint
-    # pprint(os.environ.items())
-    # print()
-    # print()
-    # pprint(os.getenv('GOOGLE_APPLICATION_CREDENTIALS_JSON'))
     credentials_json = os.getenv('GOOGLE_APPLICATION_CREDENTIALS_JSON')
     if credentials_json:
         credentials_dict = json.loads(credentials_json)
@@ -101,19 +96,18 @@ def upload_dags_to_composer(
 
 if __name__ == "__main__":
 
-    _get_storage_client()
-    # parser = argparse.ArgumentParser(
-    #     description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
-    # )
-    # parser.add_argument(
-    #     "--dags_directory",
-    #     help="Relative path to the source directory containing your DAGs",
-    # )
-    # parser.add_argument(
-    #     "--dags_bucket",
-    #     help="Name of the DAGs bucket of your Composer environment without the gs:// prefix",
-    # )
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument(
+        "--dags_directory",
+        help="Relative path to the source directory containing your DAGs",
+    )
+    parser.add_argument(
+        "--dags_bucket",
+        help="Name of the DAGs bucket of your Composer environment without the gs:// prefix",
+    )
 
-    # args = parser.parse_args()
+    args = parser.parse_args()
 
-    # upload_dags_to_composer(args.dags_directory, args.dags_bucket)
+    upload_dags_to_composer(args.dags_directory, args.dags_bucket)
