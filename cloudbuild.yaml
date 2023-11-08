@@ -32,11 +32,7 @@ steps:
 
   # Example: Passing the environment variable to Docker
   - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'run'
-      - '-e'
-      - 'GOOGLE_APPLICATION_CREDENTIALS_JSON=$$${_SECRET_ENV_VAR}'
-      - 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}'
+    args: ['run', '-e', 'GOOGLE_APPLICATION_CREDENTIALS_JSON=$_SECRET_ENV_VAR', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}']
     secretEnv: ['_SECRET_ENV_VAR']
 
   # # run the dag tests
