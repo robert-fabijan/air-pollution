@@ -23,7 +23,7 @@ def _get_storage_client():
     Returns:
         google storage client
     """
-    credentials_json = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS_JSON", "Not Found")
+    credentials_json = os.getenv('GOOGLE_APPLICATION_CREDENTIALS_JSON')
     if credentials_json:
         credentials_dict = json.loads(credentials_json)
         credentials = service_account.Credentials.from_service_account_info(credentials_dict)

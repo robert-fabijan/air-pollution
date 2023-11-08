@@ -30,18 +30,14 @@ steps:
     args: ['build', '-t', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}', '.'] # tag docker image with commit sha
     id: 'docker build'
 
+  # Example: Passing the environment variable to Docker
   - name: 'gcr.io/cloud-builders/docker'
-    entrypoint: 'bash'
     args:
-      - '-c'
-      - |
-        echo "Secret is $${_SECRET_ENV_VAR}"
-        echo $${_SECRET_ENV_VAR} | docker run \
-          -e GOOGLE_APPLICATION_CREDENTIALS_JSON= \
-          --env-file <(echo GOOGLE_APPLICATION_CREDENTIALS_JSON) \
-          gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
+      - 'run'
+      - '-e'
+      - 'GOOGLE_APPLICATION_CREDENTIALS_JSON=$$${_SECRET_ENV_VAR}'
+      - 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}'
     secretEnv: ['_SECRET_ENV_VAR']
-    id: 'docker run'
 
   # # run the dag tests
   # - name: 'gcr.io/cloud-builders/docker'
