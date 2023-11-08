@@ -30,10 +30,10 @@ steps:
     args: ['build', '-t', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}', '.'] # tag docker image with commit sha
     id: 'docker build'
 
-  # # run the dag tests
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args: ['run', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}']
-  #   id: 'docker run'
+  # run the dag tests
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['run', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}']
+    id: 'docker run'
     
 
   # # Run your Python script to move dags to folder
