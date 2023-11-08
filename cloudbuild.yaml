@@ -14,14 +14,14 @@ steps:
 
   # [START composer_cicd_dagsync_yaml]
 
-  # Step to download the Rust installation script
-  - name: 'gcr.io/cloud-builders/curl'
-    args: ['--proto', '=https', '--tlsv1.2', '-sSf', '-o', '/tmp/rustup.sh', 'https://sh.rustup.rs']
+  # # Step to download the Rust installation script
+  # - name: 'gcr.io/cloud-builders/curl'
+  #   args: ['--proto', '=https', '--tlsv1.2', '-sSf', '-o', '/tmp/rustup.sh', 'https://sh.rustup.rs']
 
-  # Step to execute the Rust installation script
-  - name: 'ubuntu'
-    entrypoint: 'bash'
-    args: ['/tmp/rustup.sh', '-y']
+  # # Step to execute the Rust installation script
+  # - name: 'ubuntu'
+  #   entrypoint: 'bash'
+  #   args: ['/tmp/rustup.sh', '-y']
     
 
   # Step to install Airflow and other Python dependencies
