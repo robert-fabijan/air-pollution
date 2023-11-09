@@ -33,7 +33,7 @@ def _get_storage_client():
 
 
 
-def _create_dags_list(dags_directory: str) -> tuple[str, list[str]]:
+def _create_files_list(dags_directory: str) -> tuple[str, list[str]]:
     """
     Create a temporary list for dags files to being uploaded to storage bucket
     """
@@ -52,8 +52,8 @@ def _create_dags_list(dags_directory: str) -> tuple[str, list[str]]:
 
 
 
-def upload_dags_to_composer(
-    dags_directory: str, bucket_name: str, name_replacement: str = "dags/"
+def upload_files_to_bucket(
+    dags_directory: str, bucket_name: str, name_replacement: str = "dags"
 ) -> None:
     """
     Given a directory, this function moves all DAG files from that directory
@@ -64,7 +64,7 @@ def upload_dags_to_composer(
         bucket_name (str): the GCS bucket of the Cloud Composer environment to upload DAGs to
         name_replacement (str, optional): the name of the "dags/" subdirectory that will be used when constructing the temporary directory path name Defaults to "dags/".
     """
-    temp_dir, dags = _create_dags_list(dags_directory)
+    temp_dir, dags = _create_files_list(dags_directory)
 
     if len(dags) > 0:
         # Note - the GCS client library does not currently support batch requests on uploads
@@ -78,7 +78,7 @@ def upload_dags_to_composer(
             # Extract the filename from the path
             dag_filename = os.path.basename(dag_path)
             # The path to use for blob should be the relative path within the bucket
-            blob_path = os.path.join(name_replacement, dag_filename)
+            blob_path = os.path.join(name_replacement+'/', dag_filename)
             # The actual file to upload is in the temp directory
             local_dag_path = os.path.join(temp_dir, dag_filename)
 
@@ -108,7 +108,15 @@ if __name__ == "__main__":
         "--dags_bucket",
         help="Name of the DAGs bucket of your Composer environment without the gs:// prefix",
     )
+    parser.add_argument(
+        "--bucket_folder_name",
+        help="Name of folder inside specified bucket from --dags_bucket",
+    )
 
     args = parser.parse_args()
 
-    upload_dags_to_composer(args.dags_directory, args.dags_bucket)
+    upload_files_to_bucket(
+        dags_directory = args.dags_directory, 
+        bucket_name = args.dags_bucket, 
+        name_replacement = args.bucket_folder_name
+    )
