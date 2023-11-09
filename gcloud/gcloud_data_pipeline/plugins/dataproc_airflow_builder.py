@@ -4,8 +4,8 @@ from airflow.utils.dates import days_ago
 from airflow.providers.google.cloud.operators.dataproc import (
     DataprocCreateClusterOperator,
     DataprocDeleteClusterOperator,
-    DataProcPySparkOperator,
 )
+from airflow.contrib.operators.dataproc_operator import DataProcPySparkOperator
 from airflow.models.baseoperator import chain
 
 
