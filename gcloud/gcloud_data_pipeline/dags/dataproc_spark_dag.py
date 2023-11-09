@@ -1,6 +1,12 @@
 from datetime import timedelta
 from airflow.utils.dates import days_ago
-from ..plugins.dataproc_airflow_builder import DataprocSparkJob
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))  # add dags
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # add gcloud_data_pipeline
+
+from plugins.dataproc_airflow_builder import DataprocSparkJob
 
 # Default arguments for the DAG
 default_args = {

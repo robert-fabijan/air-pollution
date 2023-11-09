@@ -40,7 +40,7 @@ def _create_files_list(dags_directory: str) -> tuple[str, list[str]]:
     temp_dir = tempfile.mkdtemp()
 
     # ignore non-DAG Python files
-    files_to_ignore = ignore_patterns("__init__.py", "*_test.py")
+    files_to_ignore = ignore_patterns("*_test.py")
 
     # Copy everything but the ignored files to a temp directory
     copytree(dags_directory, f"{temp_dir}/", ignore=files_to_ignore, dirs_exist_ok=True)
