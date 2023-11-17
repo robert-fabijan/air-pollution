@@ -5,7 +5,7 @@ from airflow.providers.google.cloud.operators.dataproc import (
     DataprocCreateClusterOperator,
     DataprocDeleteClusterOperator,
 )
-from airflow.contrib.operators.dataproc_operator import DataProcPySparkOperator
+from airflow.providers.google.cloud.operators.dataproc import DataprocSubmitJobOperator
 from airflow.models.baseoperator import chain
 
 
@@ -83,17 +83,26 @@ class DataprocSparkJob:
 
     def _run_pyspark_job_operator(self):
         """
-        Run an actual pyspark script inside created cluster. 
-        You will require main .py script to run it and zipped .py dependecies.
+        Run an actual PySpark script inside the created cluster.
+        You will require a main .py script to run it and zipped .py dependencies.
 
-        Specify an URI from bucket to make it working.
+        Specify a URI from the bucket to make it work.
         """
-        return DataProcPySparkOperator(
+        pyspark_job = {
+            "reference": {"project_id": self.gcp_project_id},
+            "placement": {"cluster_name": self.cluster_name},
+            "pyspark_job": {"main_python_file_uri": self.pyspark_uri},
+        }
+
+        # Include additional Python files if any
+        if self.py_files_uris:
+            pyspark_job["pyspark_job"]["python_file_uris"] = self.py_files_uris
+
+        return DataprocSubmitJobOperator(
             task_id='run_pyspark_job',
-            main=self.pyspark_uri,
-            py_files=self.py_files_uris,
-            cluster_name=self.cluster_name,
+            job=pyspark_job,
             region=self.cluster_region,
+            project_id=self.gcp_project_id,
             dag=self.dag,
         )
 
