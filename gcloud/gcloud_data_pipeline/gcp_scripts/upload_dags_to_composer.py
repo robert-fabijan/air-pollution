@@ -12,7 +12,6 @@ from google.cloud import storage
 from google.oauth2 import service_account
 
 
-
 def _get_storage_client():
     """
     Method that loads credential provided through secrets on Google Cloud. 

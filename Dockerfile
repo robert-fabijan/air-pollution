@@ -14,13 +14,13 @@ COPY . ./
 
 CMD python $WORK_DIRECTORY/gcp_scripts/upload_dags_to_composer.py \
         --dags_directory=$WORK_DIRECTORY/dags/ \
-        --dags_bucket=us-central1-air-pollution-c-2bdb0ea3-bucket \
+        --dags_bucket=air-pollution-composer-bucket \
         --bucket_folder_name=dags && \
     python $WORK_DIRECTORY/gcp_scripts/upload_dags_to_composer.py \
         --dags_directory=$WORK_DIRECTORY/plugins/ \
-        --dags_bucket=us-central1-air-pollution-c-2bdb0ea3-bucket \
+        --dags_bucket=air-pollution-composer-bucket \
         --bucket_folder_name=dags/plugins && \
     python $WORK_DIRECTORY/gcp_scripts/upload_dags_to_composer.py \
         --dags_directory=$WORK_DIRECTORY/pyspark/ \
-        --dags_bucket=air-pollution-bucket \
+        --dags_bucket=air-pollution-composer-bucket \
         --bucket_folder_name=pyspark 

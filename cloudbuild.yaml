@@ -23,8 +23,8 @@ steps:
     args: ['run', '-e', 'GOOGLE_APPLICATION_CREDENTIALS_JSON=${_CREDENTIALS}', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}']
 
 
-# availableSecrets:
-#   secretManager:
-#   - versionName: projects/${PROJECT_ID}/secrets/my-secret-service-account/versions/latest
-#     env: '_SECRET_ENV_VAR'
+availableSecrets:
+  secretManager:
+  - versionName: projects/${PROJECT_ID}/secrets/my-secret-service-account/versions/latest
+    env: '_SECRET_ENV_VAR'
 
