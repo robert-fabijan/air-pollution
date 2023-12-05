@@ -27,9 +27,11 @@ def gcloud_get_openweather_data_function(request, context=None) -> dict:
     # Data Extrat->Transform Object
     OpenWeatherDataIngestorObject = OpenWeatherDataIngestor()
 
+
     # Utils object
     DataConfiguratorObject = DataConfigurator()
-    # data placeholder
+    START, END = DataConfiguratorObject.timeframe_window()
+    
     all_city_data = {}
 
     for city in DataConfiguratorObject.load_cities_from_yaml():
@@ -37,7 +39,7 @@ def gcloud_get_openweather_data_function(request, context=None) -> dict:
         coord_data = OpenWeatherDataIngestorObject.get_city_coordinates(city['name'], city['country_code'])
         # get air polluution_data for city
         air_pollution_data = OpenWeatherDataIngestorObject.get_city_air_pollution_data(coord_data['lat'], coord_data['lon'])
-        historical_air_pollution = OpenWeatherDataIngestorObject.get_city_air_pollution_history_data(coord_data['lat'], coord_data['lon'], 1696320000, 1696356000)  # Timestamp podane na 3-10-2023 8-18, na próbę
+        historical_air_pollution = OpenWeatherDataIngestorObject.get_city_air_pollution_history_data(coord_data['lat'], coord_data['lon'], START, END)  
 
 
         # append data placeholder
@@ -45,7 +47,7 @@ def gcloud_get_openweather_data_function(request, context=None) -> dict:
         all_city_data[city['name']]['air_pollution'] = air_pollution_data
         all_city_data[city['name']]['history_air_pollution'] = historical_air_pollution
 
-    return str(all_city_data) + 'sa'
+    return str(all_city_data)
 
 
 
