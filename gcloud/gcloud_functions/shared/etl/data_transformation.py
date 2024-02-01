@@ -12,6 +12,7 @@ class OpenWeatherHistoricalDataTransformator:
         Loops through all cities from json_file and save loaded data to dictionary.
         Return None if no json.
         '''
+        print(msg)
         # Flatten nested structures and store each entry in a list
         entries = [
             { 

@@ -63,6 +63,7 @@ def transform_api_message(request, context=None) -> None:
     :param context:
     :return pandas.DataFrame: clean dataframe with air pollution data 
     """
+    print(type(request))
     return OpenWeatherHistoricalDataTransformator().historic_data_transform(request)
 
 
