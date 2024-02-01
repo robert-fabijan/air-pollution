@@ -6,19 +6,8 @@ class OpenWeatherHistoricalDataTransformator:
     def __init__(self) -> None:
         pass
 
-    def load_json(self, path_to_file: str) -> dict:
-        '''
-        Loads data from .json file in provided path.
-        '''
-        try:
-            with open(path_to_file, 'r') as file:
-                json_data = json.load(file)
 
-            return json_data
-        except json.JSONDecodeError:
-            return None
-
-    def save_history_data_to_dict(self, json_file: dict) -> dict:
+    def save_history_data_to_dict(self, msg: dict) -> dict:
         '''
         Loops through all cities from json_file and save loaded data to dictionary.
         Return None if no json.
@@ -40,7 +29,7 @@ class OpenWeatherHistoricalDataTransformator:
                 'nh3': item['air_components']['nh3'],
                 'timestamp': item['datetime']
             }
-            for city, data in json_file.items()
+            for city, data in json.loads(msg).items()
             for key, item in data['history_air_pollution'].items()
         ]
 
@@ -58,7 +47,6 @@ class OpenWeatherHistoricalDataTransformator:
             return None
 
     def data_cleaning(self, df: pd.DataFrame) -> pd.DataFrame:
-        # TU NIE WIEM W SUMIE JAK TO ZROBIĆ LOGICZNIE, A OBIEKTOWO, WIĘC NA RAZIE WYPRINTOWAŁAM OUTPUTY
 
         # prints information about DatFrame - CZY TO POTRZEBNE?
         print("DATAFRAME INFORMATION: ", df.info())
@@ -88,14 +76,9 @@ class OpenWeatherHistoricalDataTransformator:
         ''' Creates separate DataFrame for each city. '''
         return df[df['city'] == city]
 
-    def historic_data_transform(self, data_dict):
-        all_city_history_dict = self.save_history_data_to_dict(data_dict)
+    def historic_data_transform(self, response):
+        all_city_history_dict = self.save_history_data_to_dict(response)
         all_city_history_data_frame = self.save_dict_to_df(all_city_history_dict)
         all_city_history_data_frame = self.data_cleaning(all_city_history_data_frame)
-
+        print(all_city_history_data_frame)
         return all_city_history_data_frame
-
-
-# x = OpenWeatherHistoricalDataTransformator()
-# file = x.load_json("C:\\Users\\matacza\\Desktop\\Projekty\\DE\\Pobieranie Danych (API)\\code\\data\\all_city_data.json")
-# print(x.save_history_data_to_dict(file))

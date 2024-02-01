@@ -4,7 +4,7 @@
 resource "google_cloudfunctions_function" "air-pollution-api-function" {
   name                  = "air-pollution-api-function"
   description           = "Function to retrieve data from Openweather API"
-  runtime               = "python11"
+  runtime               = "python311"
   available_memory_mb   = 128
   source_repository {
     url = "https://source.developers.google.com/projects/${var.gcp_project}/repos/${var.repository_name}/moveable-aliases/${var.branch_name}/paths/${var.source_directory}"
