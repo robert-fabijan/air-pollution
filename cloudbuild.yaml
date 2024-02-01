@@ -21,7 +21,7 @@ steps:
     - --entry-point=transform_api_message
     - --region=us-central1
     - --source=./gcloud/gcloud_functions
-    - --trigger-topic=projects/useful-tempest-398111/topics/air-pollution-api
+    - --trigger-topic=air-pollution-api
     - --runtime=python311
 
   # # Step to install Airflow and other Python dependencies
