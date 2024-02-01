@@ -17,8 +17,8 @@ steps:
     - gcloud
     - functions
     - deploy
-    - function-air-pollution
-    - --entry-point=gcloud_get_openweather_data_function
+    - transform-air-pollution
+    - --entry-point=transform_api_message
     - --region=us-central1
     - --source=./gcloud/gcloud_functions
     - --trigger-topic=projects/useful-tempest-398111/topics/air-pollution-api
