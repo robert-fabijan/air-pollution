@@ -1,5 +1,6 @@
 logsBucket: "gs://builds-logs-bucket"
 steps:
+  # Step to deploy API function
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     args:
     - gcloud
@@ -12,6 +13,7 @@ steps:
     - --trigger-http
     - --runtime=python311
 
+  # Step to deploy Transformation Function
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     args:
     - gcloud
@@ -24,7 +26,7 @@ steps:
     - --trigger-topic=air-pollution-api
     - --runtime=python311
 
-  # Step to deploy the Cloud Workflow
+  # Step to deploy the Cloud Workflow 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
