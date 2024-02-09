@@ -5,7 +5,7 @@ resource "google_cloudfunctions_function" "air-pollution-api-function" {
   name                  = "air-pollution-api-function"
   description           = "Function to retrieve data from Openweather API"
   runtime               = "python311"
-  available_memory_mb   = 128
+  available_memory_mb   = 256
   source_repository {
     url = "https://source.developers.google.com/projects/${var.gcp_project}/repos/${var.repository_name}/moveable-aliases/${var.branch_name}/paths/${var.source_directory}"
   }
@@ -57,7 +57,7 @@ resource "google_workflows_workflow" "workflow-air-pollution" {
   name = "workflow-air-pollution"
   region = var.gcp_region
 
-  source_contents = file("${path.module}/../workflow.yaml")
+  source_contents = file("${path.module}/../workflows/openweather_api_to_pubsub.yaml")
 }
 
 # Create BigQuery dataset
