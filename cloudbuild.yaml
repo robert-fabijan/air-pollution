@@ -31,7 +31,7 @@ steps:
     args:
       - workflows
       - deploy
-      - my-workflow
+      - workflow-air-pollution
       - --source=workflows/openweather_api_to_pubsub.yaml
       - --location=europe-west1
 
