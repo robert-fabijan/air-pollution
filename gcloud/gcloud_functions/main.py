@@ -52,7 +52,7 @@ def gcloud_get_openweather_data_function(request, context=None) -> dict:
 
 
 @functions_framework.http
-def transform_api_message(request, context=None) -> None:
+def gcloud_transform_api_message(request, context=None) -> None:
     """
     
     Run a etl script to transform a dict string data from pubsub message. 
