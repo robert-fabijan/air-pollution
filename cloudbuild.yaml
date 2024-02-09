@@ -7,7 +7,7 @@ steps:
     - deploy
     - function-air-pollution
     - --entry-point=gcloud_get_openweather_data_function
-    - --region=europe-west1
+    - --region=europe-west2
     - --source=./gcloud/gcloud_functions
     - --trigger-http
     - --runtime=python311
@@ -19,7 +19,7 @@ steps:
     - deploy
     - transform-air-pollution
     - --entry-point=gcloud_transform_api_message
-    - --region=europe-west1
+    - --region=europe-west2
     - --source=./gcloud/gcloud_functions
     - --trigger-topic=air-pollution-api
     - --runtime=python311
