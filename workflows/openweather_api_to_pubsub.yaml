@@ -4,14 +4,14 @@ main:
     - call_function:
         call: http.get
         args:
-          url: https://us-central1-useful-tempest-398111.cloudfunctions.net/function-1-examle
+          url: https://europe-west1-terraform-test-project-412415.cloudfunctions.net/air-pollution-api-function
           auth:
             type: OIDC
         result: function_response
     - publish_to_pubsub:
         call: googleapis.pubsub.v1.projects.topics.publish
         args:
-          topic: projects/useful-tempest-398111/topics/air-pollution-api
+          topic: projects/terraform-test-project-412415/topics/air-pollution-topic
           body:
             messages:
               - data: ${base64.encode(text.encode(function_response.body))}
