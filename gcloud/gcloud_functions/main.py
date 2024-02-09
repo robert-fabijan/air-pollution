@@ -1,6 +1,8 @@
 import functions_framework
 import sys
 import os
+import json
+import urllib.parse
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))  # add gcloud_functions
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # add gcloud
@@ -63,9 +65,22 @@ def gcloud_transform_api_message(request, context=None) -> None:
     :param context:
     :return pandas.DataFrame: clean dataframe with air pollution data 
     """
-    print(type(request))
-    print(request.get_json())
-    return OpenWeatherHistoricalDataTransformator().historic_data_transform(request.get_json())
+    # print(type(request))
+    # print(request.get_json())
+    # Your JSON data as a string
+    # Parse the outer JSON
+    outer_data = json.loads(request.get_json())
+
+    # Extract the encoded inner JSON string
+    encoded_inner_json = outer_data['data']['data']
+
+    # Decode the inner JSON string
+    decoded_inner_json = urllib.parse.unquote(encoded_inner_json)
+
+    # Parse the decoded JSON string
+    inner_data = json.loads(decoded_inner_json)
+    print(inner_data)
+    return OpenWeatherHistoricalDataTransformator().historic_data_transform(inner_data)
 
 
 
