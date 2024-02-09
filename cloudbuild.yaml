@@ -5,9 +5,9 @@ steps:
     - gcloud
     - functions
     - deploy
-    - air-pollution-function
+    - air-pollution-api-function
     - --entry-point=gcloud_get_openweather_data_function
-    - --region=europe-west2
+    - --region=europe-west1
     - --source=./gcloud/gcloud_functions
     - --trigger-http
     - --runtime=python311
@@ -20,7 +20,7 @@ steps:
     - deploy
     - transform-air-pollution
     - --entry-point=gcloud_transform_api_message
-    - --region=europe-west2
+    - --region=europe-west1
     - --source=./gcloud/gcloud_functions
     - --trigger-topic=air-pollution-api
     - --runtime=python311
@@ -33,7 +33,7 @@ steps:
       - deploy
       - my-workflow
       - --source=workflows/openweather_api_to_pubsub.yaml
-      - --location=europe-west2
+      - --location=europe-west1
 
   # # Step to install Airflow and other Python dependenciesx
   # # build the docker image
