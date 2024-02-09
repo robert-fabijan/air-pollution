@@ -12,7 +12,7 @@ steps:
     - --trigger-http
     - --runtime=python311
 
-  # Step to deploy Transformation Function
+  # Step to deploy Transformation Function n
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     args:
     - gcloud
