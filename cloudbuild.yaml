@@ -1,4 +1,3 @@
-logsBucket: "gs://builds-logs-bucket"
 steps:
   # Step to deploy API function
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
