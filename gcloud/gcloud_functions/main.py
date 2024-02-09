@@ -71,13 +71,13 @@ def gcloud_transform_api_message(request, context=None) -> None:
 
     # Extract the encoded inner JSON string
     encoded_inner_json = request.get_json()['data']['data']
-
+    print("PRINT1", encoded_inner_json)
     # Decode the inner JSON string
     decoded_inner_json = urllib.parse.unquote(encoded_inner_json)
-
+    print("PRINT2",decoded_inner_json)
     # Parse the decoded JSON string
     inner_data = json.loads(decoded_inner_json)
-    print(inner_data)
+    print("PRINT3",inner_data)
     return OpenWeatherHistoricalDataTransformator().historic_data_transform(inner_data)
 
 
