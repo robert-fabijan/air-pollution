@@ -64,7 +64,7 @@ def gcloud_transform_api_message(request, context=None) -> None:
     :return pandas.DataFrame: clean dataframe with air pollution data 
     """
     print(type(request))
-    return OpenWeatherHistoricalDataTransformator().historic_data_transform(request)
+    return OpenWeatherHistoricalDataTransformator().historic_data_transform(request.json())
 
 
 
