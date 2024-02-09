@@ -3,6 +3,7 @@ import sys
 import os
 import json
 import urllib.parse
+import base64
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))  # add gcloud_functions
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # add gcloud
@@ -73,7 +74,7 @@ def gcloud_transform_api_message(request, context=None) -> None:
     encoded_inner_json = request.get_json()['data']['data']
     print("PRINT1", encoded_inner_json)
     # Decode the inner JSON string
-    decoded_inner_json = urllib.parse.unquote(encoded_inner_json)
+    decoded_inner_json = base64.b64decode(encoded_inner_json).decode('utf-8')
     print("PRINT2",decoded_inner_json)
     # Parse the decoded JSON string
     inner_data = json.loads(decoded_inner_json)
