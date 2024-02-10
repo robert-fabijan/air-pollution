@@ -74,6 +74,7 @@ def gcloud_transform_api_message(request, context=None) -> None:
 
     # Extract the encoded inner JSON string
     encoded_inner_json = request.get_json()['data']['data']
+    print(request.get_json())
     # Decode the inner JSON string
     decoded_inner_json = base64.b64decode(encoded_inner_json).decode('utf-8')
     # Parse the decoded JSON string
