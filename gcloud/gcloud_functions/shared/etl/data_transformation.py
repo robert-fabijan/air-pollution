@@ -12,7 +12,6 @@ class OpenWeatherHistoricalDataTransformator:
         Loops through all cities from json_file and save loaded data to dictionary.
         Return None if no json.
         '''
-        print(msg)
         # Flatten nested structures and store each entry in a list
         entries = [
             { 
@@ -49,17 +48,12 @@ class OpenWeatherHistoricalDataTransformator:
 
     def data_cleaning(self, df: pd.DataFrame) -> pd.DataFrame:
 
-        # prints information about DatFrame - CZY TO POTRZEBNE?
-        print("DATAFRAME INFORMATION: ", df.info())
-
         # replace "ń" with "n" in city names
         df['city'] = df['city'].str.replace("ń", "n")
 
         # convert timestamp column data type to timestamp
         df['timestamp'] = df['timestamp'].astype('datetime64[s]')
 
-        # confirm conversion - CZY TO POTRZEBNE?
-        print("CONVERTED DATATYPES: ", df.dtypes)
         return df
 
     def melt_all_cities_data_frame(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -79,7 +73,8 @@ class OpenWeatherHistoricalDataTransformator:
 
     def historic_data_transform(self, response):
         all_city_history_dict = self.save_history_data_to_dict(response)
-        all_city_history_data_frame = self.save_dict_to_df(all_city_history_dict)
-        all_city_history_data_frame = self.data_cleaning(all_city_history_data_frame)
-        print(all_city_history_data_frame)
-        return all_city_history_data_frame
+        all_city_history_dataframe = self.save_dict_to_df(all_city_history_dict)
+        clean_dataframe = self.data_cleaning(all_city_history_dataframe)
+        normalized_dataframe = self.melt_all_cities_data_frame(clean_dataframe)
+        print(normalized_dataframe)
+        return normalized_dataframe
