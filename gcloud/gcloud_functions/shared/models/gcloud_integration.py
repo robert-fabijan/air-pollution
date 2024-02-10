@@ -7,9 +7,9 @@ import json
 
 class GCloudIntegration:
 
-    def __init__(self):
+    def __init__(self, project_id):
         self.cloud_key = None
-        self.project_id = None
+        self.project_id = project_id
         self.openweather_api_key = None
 
 
@@ -59,7 +59,6 @@ class GCloudIntegration:
         Return a client to manage google cloud Big Quert from provided .json key file.
         '''
         try:
-            credentials = service_account.Credentials.from_service_account_file(self.cloud_key)
             return bigquery.Client(credentials=credentials,
                                    project=self.project_id)
         except Exception as e:
@@ -138,13 +137,13 @@ class GCloudIntegration:
 
 
 
-    def _insert_data_from_df_to_bigquery_table(self, dataframe, dataset_name, table_name, schema):
+    def insert_data_from_df_to_bigquery_table(self, credentials, dataframe, dataset_name, table_name, schema):
         ''' Inserts data from DataFrame to BigQuery table '''
 
         table_id = f"{self.project_id}.{dataset_name}.{table_name}"  # choose the destination table
         job_config = bigquery.LoadJobConfig(schema=schema)  # choose table schema
         try:
-            job = self._get_google_cloud_bigquery_client().load_table_from_dataframe(
+            job = self._get_google_cloud_bigquery_client(credentials = credentials).load_table_from_dataframe(
                 dataframe, table_id, job_config=job_config)  # Upload the contents of a table from a DataFrame
             job.result()  # Start the job and wait for it to complete and get the result
         except Exception as e:

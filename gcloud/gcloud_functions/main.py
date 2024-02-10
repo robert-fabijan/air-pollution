@@ -4,6 +4,7 @@ import os
 import json
 import ast
 import base64
+from google.cloud import bigquery
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))  # add gcloud_functions
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # add gcloud
@@ -80,8 +81,21 @@ def gcloud_transform_api_message(request, context=None) -> None:
     json_data = json.dumps(dict_data)
     # print("PRINT3",json.loads(json_data))
     dataframe =  OpenWeatherHistoricalDataTransformator().historic_data_transform(json.loads(json_data))
-    secret = GCloudIntegration().get_secret(project_id = 'terraform-test-project-412415', secret_id = "credentials-for-authentication")
-    print(secret)
+    GCloudIntegrationObject = GCloudIntegration(project_id = 'terraform-test-project-412415') 
+    secret = GCloudIntegrationObject.get_secret(project_id = 'terraform-test-project-412415', secret_id = "credentials-for-authentication")
+    GCloudIntegrationObject.insert_data_from_df_to_bigquery_table(
+        dataframe = dataframe, 
+        dateset_name = "air_pollution_dataset_unified", 
+        table_name = "unified_city_data", 
+        schema = [
+            bigquery.SchemaField("city", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("lat", "FLOAT", mode="NULLABLE"),
+            bigquery.SchemaField("lon", "FLOAT", mode="NULLABLE"),
+            bigquery.SchemaField("tag_name", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("value", "FLOAT", mode="NULLABLE"),
+            bigquery.SchemaField("timestamp", "TIMESTAMP", mode="NULLABLE"),
+        ]
+    )
     return True
 
 
