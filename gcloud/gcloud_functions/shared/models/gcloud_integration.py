@@ -54,7 +54,7 @@ class GCloudIntegration:
             return None # if there is no api key provided
 
 
-    def _get_google_cloud_bigquery_client(self) -> bigquery.Client:
+    def _get_google_cloud_bigquery_client(self, credentials) -> bigquery.Client:
         '''
         Return a client to manage google cloud Big Quert from provided .json key file.
         '''

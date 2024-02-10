@@ -12,6 +12,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # 
 from shared.models.openweather_transformator import OpenWeatherDataIngestor
 from shared.utils import DataConfigurator
 from shared.etl.data_transformation import OpenWeatherHistoricalDataTransformator
+from shared.models.gcloud_integration import GCloudIntegration
 
 
 
@@ -77,8 +78,11 @@ def gcloud_transform_api_message(request, context=None) -> None:
     # Parse the decoded JSON string
     dict_data = ast.literal_eval(decoded_inner_json)
     json_data = json.dumps(dict_data)
-    print("PRINT3",json.loads(json_data))
-    return OpenWeatherHistoricalDataTransformator().historic_data_transform(json.loads(json_data))
+    # print("PRINT3",json.loads(json_data))
+    dataframe =  OpenWeatherHistoricalDataTransformator().historic_data_transform(json.loads(json_data))
+    secret = GCloudIntegration().get_secret(project_id = 'terraform-test-project-412415', secret_id = "credentials-for-authentication")
+    print(secret)
+    return True
 
 
 
