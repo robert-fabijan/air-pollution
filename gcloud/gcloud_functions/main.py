@@ -85,7 +85,7 @@ def gcloud_transform_api_message(request, context=None) -> None:
     secret = GCloudIntegrationObject.get_secret(project_id = 'terraform-test-project-412415', secret_id = "credentials-for-authentication")
     GCloudIntegrationObject.insert_data_from_df_to_bigquery_table(
         dataframe = dataframe, 
-        dateset_name = "air_pollution_dataset_unified", 
+        dataset_name = "air_pollution_dataset_unified", 
         table_name = "unified_city_data", 
         schema = [
             bigquery.SchemaField("city", "STRING", mode="NULLABLE"),
