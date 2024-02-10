@@ -59,8 +59,14 @@ class GCloudIntegration:
         Return a client to manage google cloud Big Quert from provided .json key file.
         '''
         try:
-            return bigquery.Client(credentials=credentials,
-                                   project=self.project_id)
+            # Parse the credentials string into a dictionary
+            credentials_dict = json.loads(credentials)
+            
+            # Create a Credentials object from the credentials dictionary
+            credentials_obj = service_account.Credentials.from_service_account_info(credentials_dict)
+            
+            # Create and return the BigQuery client
+            return bigquery.Client(credentials=credentials_obj, project=self.project_id)
         except Exception as e:
             return None # if there is no api key provided
 
