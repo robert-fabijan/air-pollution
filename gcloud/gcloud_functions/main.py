@@ -2,7 +2,7 @@ import functions_framework
 import sys
 import os
 import json
-import urllib.parse
+import ast
 import base64
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))  # add gcloud_functions
@@ -72,18 +72,13 @@ def gcloud_transform_api_message(request, context=None) -> None:
 
     # Extract the encoded inner JSON string
     encoded_inner_json = request.get_json()['data']['data']
-    print("PRINT1", encoded_inner_json)
     # Decode the inner JSON string
     decoded_inner_json = base64.b64decode(encoded_inner_json).decode('utf-8')
-    print("PRINT2",decoded_inner_json)
     # Parse the decoded JSON string
-    inner_data = json.loads(decoded_inner_json.replace("'", '"'))
-    print("PRINT3",inner_data)
-    return OpenWeatherHistoricalDataTransformator().historic_data_transform(inner_data)
-
-
-
-
+    dict_data = ast.literal_eval(decoded_inner_json)
+    json_data = json.dumps(dict_data)
+    print("PRINT3",json.loads(json_data))
+    return OpenWeatherHistoricalDataTransformator().historic_data_transform(json.loads(json_data))
 
 
 
